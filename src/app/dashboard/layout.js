@@ -18,7 +18,9 @@ export default function DashboardLayout({ children }) {
       {/* Sidebar */}
       <aside style={{
         width: "280px",
-        background: "rgba(26, 26, 26, 0.9)",
+        minWidth: "280px",
+        flexShrink: 0,
+        background: "rgba(26, 26, 26, 0.95)",
         borderRight: "1px solid rgba(255, 255, 255, 0.1)",
         backdropFilter: "blur(10px)",
         padding: "2rem 1rem",
@@ -26,12 +28,13 @@ export default function DashboardLayout({ children }) {
         flexDirection: "column",
         position: "sticky",
         top: 0,
-        height: "100vh"
+        height: "100vh",
+        zIndex: 50
       }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "3rem", padding: "0 1rem" }}>
+        <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "3rem", padding: "0 1rem" }}>
           <ShieldAlert size={28} color="var(--color-caution)" />
-          <h2 style={{ fontSize: "1.2rem", fontWeight: "bold" }}>TP Dashboard</h2>
-        </div>
+          <h2 style={{ fontSize: "1.2rem", fontWeight: "bold" }}>Grid AI</h2>
+        </Link>
 
         <nav style={{ flex: 1, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
           {navLinks.map((link) => {
@@ -44,11 +47,12 @@ export default function DashboardLayout({ children }) {
                   display: "flex",
                   alignItems: "center",
                   gap: "1rem",
-                  padding: "1rem",
+                  padding: "0.75rem 1rem",
                   borderRadius: "8px",
                   background: isActive ? "rgba(250, 204, 21, 0.1)" : "transparent",
                   color: isActive ? "var(--color-caution)" : "var(--color-lane-dim)",
-                  transition: "all 0.2s ease"
+                  transition: "all 0.2s ease",
+                  fontSize: "0.95rem"
                 }}
               >
                 {link.icon}
@@ -61,12 +65,12 @@ export default function DashboardLayout({ children }) {
         {/* User Profile */}
         <div style={{ padding: "1rem", borderTop: "1px solid rgba(255,255,255,0.1)", display: "flex", alignItems: "center", gap: "1rem" }}>
           <UserButton afterSignOutUrl="/" />
-          <div style={{ fontSize: "0.9rem", color: "var(--color-lane-dim)" }}>Traffic Officer</div>
+          <div style={{ fontSize: "0.85rem", color: "var(--color-lane-dim)" }}>Traffic Officer</div>
         </div>
       </aside>
 
       {/* Main Content Area */}
-      <main style={{ flex: 1, padding: "2rem", overflowY: "auto" }}>
+      <main style={{ flex: 1, padding: "2rem", overflowY: "auto", minWidth: 0 }}>
         {children}
       </main>
     </div>

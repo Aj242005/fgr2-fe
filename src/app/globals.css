@@ -160,6 +160,18 @@ a {
   }
 }
 
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .charts-grid {
+    grid-template-columns: 3fr 2fr;
+  }
+}
+
 .dropzone {
   border: 2px dashed var(--color-lane-dim);
   border-radius: 16px;

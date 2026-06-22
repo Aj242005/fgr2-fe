@@ -2,7 +2,8 @@
 import { useState, useRef } from "react";
 import { Upload, X, AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
-import ChallanDownloader from "@/components/ChallanTemplate";
+
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "https://fgr2-backend.mooo.com";
 
 export default function DetectionApp() {
   const [file, setFile] = useState(null);
@@ -43,8 +44,7 @@ export default function DetectionApp() {
     formData.append("file", file);
 
     try {
-      // Assuming your backend expects multipart/form-data with a "file" field
-      const response = await fetch("https://fgr2-backend.mooo.com/api/analyze/image", {
+      const response = await fetch(`${API_BASE}/api/analyze/image`, {
         method: "POST",
         body: formData,
       });
@@ -63,11 +63,13 @@ export default function DetectionApp() {
   };
 
   return (
-    <div className="container" style={{ padding: "4rem 0", paddingBottom: "10rem" }}>
-      <div style={{ textAlign: "center", marginBottom: "4rem" }}>
-        <h2 className="h2-title">Experience the <span className="text-safe" style={{ color: "var(--color-safe)"}}>System</span></h2>
-        <p className="text-lead" style={{ marginTop: "1rem" }}>Upload an image from a traffic camera to see the YOLOv8 engine in action.</p>
-      </div>
+    <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+      <header style={{ marginBottom: "2rem" }}>
+        <h1 style={{ fontSize: "1.8rem", fontWeight: "800" }}>Live AI Scan</h1>
+        <p style={{ color: "var(--color-lane-dim)", marginTop: "0.5rem" }}>
+          Upload a traffic camera image to run the YOLOv8 detection engine. Violations are automatically saved.
+        </p>
+      </header>
 
       <div className="dashboard-grid">
         
@@ -144,7 +146,7 @@ export default function DetectionApp() {
         {/* Results Zone */}
         <div>
           <div className="glass-panel" style={{ height: "100%", display: "flex", flexDirection: "column" }}>
-            <h3 style={{ fontSize: "1.2rem", fontWeight: "600", marginBottom: "1.5rem", borderBottom: "1px solid rgba(255,255,255,0.1)", paddingBottom: "1rem" }}>
+            <h3 style={{ fontSize: "1.1rem", fontWeight: "600", marginBottom: "1.5rem", borderBottom: "1px solid rgba(255,255,255,0.1)", paddingBottom: "1rem" }}>
               Analysis Results
             </h3>
             
@@ -167,19 +169,6 @@ export default function DetectionApp() {
                 animate={{ opacity: 1, y: 0 }}
                 style={{ flex: 1, overflowY: "auto" }}
               >
-                {/* Visual Result (Hidden as requested) */}
-                {/* 
-                {result.annotated_image_url && (
-                   <div style={{ marginBottom: "2rem", borderRadius: "8px", overflow: "hidden", border: "1px solid var(--color-safe)" }}>
-                     <img 
-                       src={`https://fgr2-backend.mooo.com/static${result.annotated_image_url}`} 
-                       alt="Annotated Result" 
-                       style={{ width: "100%", height: "auto", display: "block" }} 
-                     />
-                   </div>
-                )}
-                */}
-                
                 {/* Data Summary */}
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "2rem" }}>
                   <div style={{ background: "rgba(255,255,255,0.05)", padding: "1rem", borderRadius: "8px" }}>
@@ -205,34 +194,30 @@ export default function DetectionApp() {
                         <tr>
                           <th>Type</th>
                           <th>Confidence</th>
+                          <th>Severity</th>
                         </tr>
                       </thead>
                       <tbody>
                         {result.report.violations.map((v, i) => (
                           <tr key={i}>
                             <td>
-                              <span className={`badge ${v.type === "helmet" ? "badge-danger" : "badge-warning"}`}>
+                              <span className={`badge ${v.type === "helmet" || v.type === "no_helmet" ? "badge-danger" : "badge-warning"}`}>
                                 {v.type}
                               </span>
                             </td>
                             <td style={{ fontFamily: "var(--font-mono)" }}>{(v.confidence * 100).toFixed(1)}%</td>
                             <td>
-                              <ChallanDownloader 
-                                violationData={{ 
-                                  id: `V-LIVE-${Math.floor(Math.random()*1000)}`, 
-                                  type: v.type, 
-                                  date: new Date().toLocaleString(),
-                                  plate: "UNKNOWN (Scan Failed)", 
-                                  fine: "₹1,000",
-                                  location: "Live Camera Feed"
-                                }} 
-                                buttonText="Issue Challan" 
-                              />
+                              <span style={{ color: v.severity === "HIGH" ? "var(--color-danger)" : v.severity === "MEDIUM" ? "var(--color-caution)" : "var(--color-lane-dim)", fontWeight: "600", fontSize: "0.85rem" }}>
+                                {v.severity}
+                              </span>
                             </td>
                           </tr>
                         ))}
                       </tbody>
                     </table>
+                    <p style={{ marginTop: "1rem", fontSize: "0.8rem", color: "var(--color-safe)" }}>
+                      ✓ Violations have been automatically saved to the database.
+                    </p>
                   </div>
                 )}
                 
