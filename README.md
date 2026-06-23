@@ -29,7 +29,7 @@ Grid AI is a next-generation automated traffic intelligence and violation proces
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/lakshinkhurana/fgr2-fe.git
+   git clone https://github.com/Aj242005/fgr2-fe.git
    cd fgr2-fe
    ```
 
