@@ -106,13 +106,12 @@ export default function ShaderBackground() {
         canvas.height = h;
       }
     }
+    const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+    if (!gl) return; // Graceful fallback — CSS gradient will show
 
     const resizeObserver = new ResizeObserver(syncSize);
     resizeObserver.observe(canvas);
     syncSize();
-
-    const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-    if (!gl) return; // Graceful fallback — CSS gradient will show
 
     function createShader(type, src) {
       const s = gl.createShader(type);
