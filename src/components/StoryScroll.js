@@ -27,7 +27,7 @@ export default function StoryScroll() {
       >
         
         {/* Checkpoint 1 */}
-        <motion.div variants={itemVariants} style={{ display: "flex", alignItems: "center", gap: "4rem", flexWrap: "wrap" }}>
+        <motion.div id="problem" variants={itemVariants} style={{ display: "flex", alignItems: "center", gap: "4rem", flexWrap: "wrap", scrollMarginTop: "120px" }}>
           <div style={{ flex: "1 1 400px" }}>
             <div style={{ background: "rgba(239, 68, 68, 0.1)", display: "inline-flex", padding: "1rem", borderRadius: "50%", marginBottom: "2rem" }}>
               <AlertTriangle size={48} className="text-danger" />
@@ -50,7 +50,7 @@ export default function StoryScroll() {
         </motion.div>
 
         {/* Checkpoint 2 */}
-        <motion.div variants={itemVariants} style={{ display: "flex", alignItems: "center", gap: "4rem", flexWrap: "wrap", flexDirection: "row-reverse" }}>
+        <motion.div id="workflow" variants={itemVariants} style={{ display: "flex", alignItems: "center", gap: "4rem", flexWrap: "wrap", flexDirection: "row-reverse", scrollMarginTop: "120px" }}>
           <div style={{ flex: "1 1 400px" }}>
             <div style={{ background: "rgba(250, 204, 21, 0.1)", display: "inline-flex", padding: "1rem", borderRadius: "50%", marginBottom: "2rem" }}>
               <Cpu size={48} className="text-accent" />
@@ -73,7 +73,7 @@ export default function StoryScroll() {
         </motion.div>
 
         {/* Checkpoint 3 */}
-        <motion.div variants={itemVariants} style={{ display: "flex", alignItems: "center", gap: "4rem", flexWrap: "wrap" }}>
+        <motion.div id="outcome" variants={itemVariants} style={{ display: "flex", alignItems: "center", gap: "4rem", flexWrap: "wrap", scrollMarginTop: "120px" }}>
           <div style={{ flex: "1 1 400px" }}>
             <div style={{ background: "rgba(34, 197, 94, 0.1)", display: "inline-flex", padding: "1rem", borderRadius: "50%", marginBottom: "2rem" }}>
               <ShieldCheck size={48} color="var(--color-safe)" />

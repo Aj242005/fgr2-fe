@@ -1,9 +1,64 @@
+@import "tailwindcss";
+
+/* ===== SENTINEL.AI Design Tokens ===== */
+@theme {
+  --color-on-primary-fixed: #001a41;
+  --color-tertiary-fixed-dim: #c9c6c5;
+  --color-on-background: #e2e1eb;
+  --color-tertiary-fixed: #e5e2e1;
+  --color-tertiary-container: #929090;
+  --color-secondary: #ffb77d;
+  --color-on-surface: #e2e1eb;
+  --color-outline-variant: #414754;
+  --color-on-secondary: #4d2600;
+  --color-surface-dim: #12131a;
+  --color-primary-container: #4a8eff;
+  --color-primary-fixed-dim: #adc7ff;
+  --color-on-tertiary-container: #2a2a29;
+  --color-secondary-container: #fd8b00;
+  --color-on-tertiary-fixed: #1c1b1b;
+  --color-surface-container-low: #1a1b22;
+  --color-surface-container-highest: #33343c;
+  --color-on-secondary-fixed: #2f1500;
+  --color-error-container: #93000a;
+  --color-primary: #adc7ff;
+  --color-on-primary: #002e68;
+  --color-on-secondary-fixed-variant: #6e3900;
+  --color-surface-variant: #33343c;
+  --color-on-tertiary: #313030;
+  --color-on-tertiary-fixed-variant: #474646;
+  --color-on-error-container: #ffdad6;
+  --color-surface-container-high: #282a31;
+  --color-surface-container-lowest: #0c0e14;
+  --color-error: #ffb4ab;
+  --color-on-primary-container: #00285b;
+  --color-inverse-on-surface: #2f3037;
+  --color-on-secondary-container: #603100;
+  --color-on-error: #690005;
+  --color-background: #12131a;
+  --color-primary-fixed: #d8e2ff;
+  --color-inverse-primary: #005bc0;
+  --color-surface-bright: #383940;
+  --color-inverse-surface: #e2e1eb;
+  --color-outline: #8b90a0;
+  --color-surface-tint: #adc7ff;
+  --color-surface-container: #1e1f26;
+  --color-tertiary: #c9c6c5;
+  --color-secondary-fixed-dim: #ffb77d;
+  --color-on-surface-variant: #c1c6d7;
+  --color-on-primary-fixed-variant: #004493;
+  --color-secondary-fixed: #ffdcc3;
+  --color-surface: #12131a;
+}
+
+/* ===== Original Design System (Preserved) ===== */
+
 :root {
   --color-asphalt: #1a1a1a;
   --color-asphalt-light: #2a2a2a;
   --color-lane: #ffffff;
   --color-lane-dim: rgba(255, 255, 255, 0.4);
-  --color-caution: #facc15;
+  --color-caution: #ef4444;
   --color-danger: #ef4444;
   --color-safe: #22c55e;
   
@@ -17,14 +72,22 @@
   margin: 0;
 }
 
-html,
-body {
+html {
   max-width: 100vw;
   overflow-x: hidden;
-  background-color: var(--color-asphalt);
   color: var(--color-lane);
   font-family: var(--font-main);
   scroll-behavior: smooth;
+  /* NO background here — body's bg propagates to canvas per CSS spec,
+     leaving body transparent so the WebGL shader at z-index:-10 is visible */
+}
+
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: #000000;
+  color: var(--color-lane);
+  font-family: var(--font-main);
 }
 
 a {
@@ -32,7 +95,7 @@ a {
   text-decoration: none;
 }
 
-/* Glassmorphism Panel */
+/* Glassmorphism Panel (Original — used by dashboard) */
 .glass-panel {
   background: rgba(42, 42, 42, 0.6);
   backdrop-filter: blur(12px);
@@ -41,6 +104,33 @@ a {
   border-radius: 16px;
   padding: 2rem;
 }
+
+/* SENTINEL.AI Glassmorphism Panel (New — used by landing page) */
+.sentinel-glass-panel {
+  background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-top: 1px solid rgba(255,255,255,0.15);
+  transition: border-color 0.3s ease;
+}
+
+.sentinel-glass-panel:hover {
+  border-color: rgba(255,255,255,0.3);
+}
+
+/* Reticle Corner Decorations */
+.reticle-corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: #FF5A00;
+  border-style: solid;
+}
+.reticle-tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+.reticle-tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+.reticle-bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+.reticle-br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
 
 /* Typography utilities */
 .h1-mega {

@@ -32,20 +32,7 @@ export default function HeroSection() {
         </motion.button>
       </motion.div>
 
-      {/* Decorative scanning line effect */}
-      <motion.div 
-        animate={{ y: ["-50vh", "50vh"] }}
-        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
-        style={{
-          position: "absolute",
-          width: "100%",
-          height: "4px",
-          background: "var(--color-safe)",
-          boxShadow: "0 0 20px 5px rgba(34, 197, 94, 0.4)",
-          opacity: 0.3,
-          zIndex: 5
-        }}
-      />
+
     </div>
   );
 }
