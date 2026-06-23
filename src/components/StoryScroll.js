@@ -64,7 +64,7 @@ export default function StoryScroll() {
              <div className="glass-panel" style={{ width: "100%", height: "300px", border: "1px solid rgba(250, 204, 21, 0.3)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                <div style={{ textAlign: "center" }}>
                  <div style={{ fontSize: "3rem", fontFamily: "var(--font-mono)", color: "var(--color-caution)", fontWeight: "bold" }}>
-                   200ms
+                   2.2s
                  </div>
                  <div style={{ color: "var(--color-lane-dim)" }}>Inference Time</div>
                </div>

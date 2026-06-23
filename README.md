@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Grid AI - The Eye of the City
 
-## Getting Started
+Grid AI is a next-generation automated traffic intelligence and violation processing frontend. Built with modern web technologies, it visualizes real-time data from CCTV detection and OCR pipelines to enforce city traffic protocols autonomously.
 
-First, run the development server:
+## 🚀 Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Framework:** Next.js 16 (App Router)
+- **UI Library:** React 19
+- **Styling:** Tailwind CSS 4
+- **Animations:** Framer Motion
+- **Authentication:** Clerk (`@clerk/nextjs`)
+- **Charts & Visualization:** Recharts, Custom WebGL Shaders
+- **Icons:** Lucide React
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🌟 Key Features
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- **Automated Enforcement Protocol Visualization:** Follows a 3-phase execution pipeline (CCTV Detection, OCR Recognition, Audit & Ticketing).
+- **Interactive Telemetry Dashboards:** Real-time metrics monitoring inference times, active nodes, and violation logs.
+- **Officer Dashboard:** Secured authentication via Clerk for administrative operations and oversight.
+- **Hardware-Accelerated Graphics:** Custom WebGL-based background shaders and premium glassmorphic UI elements.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📦 Getting Started
 
-## Learn More
+### Prerequisites
+- Node.js (v18+)
+- npm, yarn, pnpm, or bun
 
-To learn more about Next.js, take a look at the following resources:
+### Installation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Aj242005/fgr2-fe.git
+   cd fgr2-fe
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-## Deploy on Vercel
+3. Set up your environment variables:
+   Create a `.env.local` file in the root directory and add your keys:
+   ```env
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
+   CLERK_SECRET_KEY=your_clerk_secret_key
+   
+   # Defaults to https://fgr2-backend.mooo.com if omitted
+   NEXT_PUBLIC_API_URL=your_api_backend_url 
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
+
+## 📂 Project Structure
+
+- `/src/app/` - Next.js App Router endpoints (Landing Page, Officer Dashboard).
+- `/src/components/landing/` - Premium landing page components, dynamic navbars, WebGL shaders, and scroll-bound animations.
+- `/src/components/` - Reusable shared components.
+
+## 📝 License
+
+This project is proprietary and intended for Grid AI platform operations.
