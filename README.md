@@ -2,6 +2,10 @@
 
 Grid AI is a next-generation automated traffic intelligence and violation processing frontend. Built with modern web technologies, it visualizes real-time data from CCTV detection and OCR pipelines to enforce city traffic protocols autonomously.
 
+### 🌐 Links
+- **Live Application:** [https://traffic-violation-eight.vercel.app/](https://traffic-violation-eight.vercel.app/)
+- **Backend Repository:** [https://github.com/Aj242005/fg-r2](https://github.com/Aj242005/fg-r2)
+
 ## 🚀 Tech Stack
 
 - **Framework:** Next.js 16 (App Router)
@@ -10,7 +14,7 @@ Grid AI is a next-generation automated traffic intelligence and violation proces
 - **Animations:** Framer Motion
 - **Authentication:** Clerk (`@clerk/nextjs`)
 - **Charts & Visualization:** Recharts, Custom WebGL Shaders
-- **Icons:** Lucide React
+- **Icons:** React Icons
 
 ## 🌟 Key Features
 

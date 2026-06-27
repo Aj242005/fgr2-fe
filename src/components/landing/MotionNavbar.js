@@ -3,7 +3,8 @@ import React, { useRef, useState } from "react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { SignInButton, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
-import { ShieldAlert, Menu, X } from "lucide-react";
+import { MdTrackChanges, MdMenu, MdClose } from "react-icons/md";
+import GlassSurface from "@/components/GlassSurface";
 
 // Simple utility for Tailwind class merging
 const cn = (...classes) => classes.filter(Boolean).join(" ");
@@ -41,13 +42,8 @@ export const NavBody = ({ children, className, visible }) => {
   return (
     <motion.div
       animate={{
-        backdropFilter: visible ? "blur(40px)" : "none",
-        boxShadow: visible
-          ? "0 16px 40px -12px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05) inset"
-          : "none",
-        width: visible ? "45%" : "100%",
+        width: visible ? "50%" : "100%",
         y: visible ? 24 : 0,
-        backgroundColor: visible ? "rgba(255, 255, 255, 0.02)" : "transparent",
       }}
       initial={false}
       transition={{
@@ -56,15 +52,31 @@ export const NavBody = ({ children, className, visible }) => {
         damping: 50,
       }}
       className={cn(
-        "relative z-[60] mx-auto hidden max-w-4xl flex-row items-center justify-between self-start rounded-full px-8 py-2 lg:flex lg:px-12 h-[80px]",
+        "relative z-[60] mx-auto hidden max-w-4xl self-start rounded-full lg:block h-[80px]",
         visible && "h-[64px]",
         className
       )}
-      style={{
-        borderBottom: visible ? "none" : "1px solid rgba(255,255,255,0.05)"
-      }}
     >
-      {children}
+      {visible ? (
+        <GlassSurface
+          width="100%"
+          height="100%"
+          borderRadius={64}
+          brightness={60}
+          opacity={0.8}
+          blur={15}
+          displace={0}
+          backgroundOpacity={0.05}
+        >
+          <div className="w-full h-full flex flex-row items-center justify-between px-8 lg:px-12">
+            {children}
+          </div>
+        </GlassSurface>
+      ) : (
+        <div className="w-full h-full flex flex-row items-center justify-between px-8 lg:px-12 border-b border-white/5">
+          {children}
+        </div>
+      )}
     </motion.div>
   );
 };
@@ -106,12 +118,6 @@ export const MobileNav = ({ children, className, visible }) => {
     <motion.div
       animate={{
         width: visible ? "95%" : "100%",
-        borderRadius: visible ? "2rem" : "0rem",
-        backgroundColor: visible ? "rgba(255, 255, 255, 0.02)" : "transparent",
-        backdropFilter: visible ? "blur(40px)" : "none",
-        boxShadow: visible
-          ? "0 16px 40px -12px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05) inset"
-          : "none",
         y: visible ? 24 : 0,
       }}
       transition={{
@@ -120,15 +126,31 @@ export const MobileNav = ({ children, className, visible }) => {
         damping: 50,
       }}
       className={cn(
-        "relative z-50 mx-auto flex w-full flex-col items-center justify-between px-0 py-2 lg:hidden h-[80px]",
+        "relative z-50 mx-auto flex w-full flex-col self-start lg:hidden h-[80px]",
         visible && "h-[64px]",
         className
       )}
-      style={{
-        borderBottom: visible ? "none" : "1px solid rgba(255,255,255,0.05)"
-      }}
     >
-      {children}
+      {visible ? (
+        <GlassSurface
+          width="100%"
+          height="100%"
+          borderRadius={32}
+          brightness={60}
+          opacity={0.8}
+          blur={15}
+          displace={0}
+          backgroundOpacity={0.05}
+        >
+          <div className="w-full h-full flex flex-col items-center justify-between px-0">
+            {children}
+          </div>
+        </GlassSurface>
+      ) : (
+        <div className="w-full h-full flex flex-col items-center justify-between px-0 py-2 border-b border-white/5">
+          {children}
+        </div>
+      )}
     </motion.div>
   );
 };
@@ -164,7 +186,7 @@ export const MobileNavMenu = ({ children, className, isOpen }) => {
 export const MobileNavToggle = ({ isOpen, onClick }) => {
   return (
     <button className="flex items-center justify-center p-2 text-white/80 hover:text-white" onClick={onClick}>
-      {isOpen ? <X size={24} /> : <Menu size={24} />}
+                {isOpen ? <MdClose size={24} /> : <MdMenu size={24} />}
     </button>
   );
 };
@@ -172,7 +194,7 @@ export const MobileNavToggle = ({ isOpen, onClick }) => {
 export const NavbarLogo = () => {
   return (
     <Link href="/" className="relative z-20 flex items-center gap-2 group cursor-pointer transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] hover:scale-[1.05] hover:-translate-y-0.5 " style={{margin:"0 0.5rem"}}>
-      <ShieldAlert size={24} color="var(--color-caution)" />
+      <MdTrackChanges size={24} color="var(--color-caution)" className="animate-heartbeat" style={{ filter: "drop-shadow(0 0 8px rgba(239, 68, 68, 0.8))" }} />
       <span style={{ fontWeight: "bold", fontSize: "1.2rem", color: "white" ,margin :"0 0.5rem"}}>Grid AI</span>
     </Link>
   );

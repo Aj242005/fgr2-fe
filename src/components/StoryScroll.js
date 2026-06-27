@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import { AlertTriangle, ShieldCheck, Cpu } from "lucide-react";
+import { MdWarning, MdSecurity, MdMemory } from "react-icons/md";
 
 export default function StoryScroll() {
   const containerVariants = {
@@ -30,7 +30,7 @@ export default function StoryScroll() {
         <motion.div id="problem" variants={itemVariants} style={{ display: "flex", alignItems: "center", gap: "4rem", flexWrap: "wrap", scrollMarginTop: "120px" }}>
           <div style={{ flex: "1 1 400px" }}>
             <div style={{ background: "rgba(239, 68, 68, 0.1)", display: "inline-flex", padding: "1rem", borderRadius: "50%", marginBottom: "2rem" }}>
-              <AlertTriangle size={48} className="text-danger" />
+              <MdWarning size={48} className="text-danger" />
             </div>
             <h2 className="h2-title" style={{ marginBottom: "1rem" }}>The <span className="text-danger">Chaos</span></h2>
             <p className="text-lead">
@@ -53,7 +53,7 @@ export default function StoryScroll() {
         <motion.div id="workflow" variants={itemVariants} style={{ display: "flex", alignItems: "center", gap: "4rem", flexWrap: "wrap", flexDirection: "row-reverse", scrollMarginTop: "120px" }}>
           <div style={{ flex: "1 1 400px" }}>
             <div style={{ background: "rgba(250, 204, 21, 0.1)", display: "inline-flex", padding: "1rem", borderRadius: "50%", marginBottom: "2rem" }}>
-              <Cpu size={48} className="text-accent" />
+              <MdMemory size={48} className="text-accent" />
             </div>
             <h2 className="h2-title" style={{ marginBottom: "1rem" }}>The <span className="text-accent">Technology</span></h2>
             <p className="text-lead">
@@ -76,7 +76,7 @@ export default function StoryScroll() {
         <motion.div id="outcome" variants={itemVariants} style={{ display: "flex", alignItems: "center", gap: "4rem", flexWrap: "wrap", scrollMarginTop: "120px" }}>
           <div style={{ flex: "1 1 400px" }}>
             <div style={{ background: "rgba(34, 197, 94, 0.1)", display: "inline-flex", padding: "1rem", borderRadius: "50%", marginBottom: "2rem" }}>
-              <ShieldCheck size={48} color="var(--color-safe)" />
+              <MdSecurity size={48} color="var(--color-safe)" />
             </div>
             <h2 className="h2-title" style={{ marginBottom: "1rem" }}>The <span style={{ color: "var(--color-safe)" }}>Order</span></h2>
             <p className="text-lead">

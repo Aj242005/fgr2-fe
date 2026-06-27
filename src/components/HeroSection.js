@@ -1,6 +1,7 @@
 "use client";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { MdExpandMore, MdDashboard } from "react-icons/md";
+import Link from "next/link";
 
 export default function HeroSection() {
   const { scrollY } = useScroll();
@@ -17,19 +18,32 @@ export default function HeroSection() {
           Next-generation traffic intelligence. 
           Scanning the streets for violations in real-time.
         </p>
-        <motion.button 
-          className="btn-primary"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => {
-            window.scrollTo({
-              top: window.innerHeight,
-              behavior: 'smooth'
-            });
-          }}
-        >
-          Begin the Journey <ChevronDown size={20} />
-        </motion.button>
+        <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap", padding: "0 1rem" }}>
+          <motion.button 
+            className="btn-primary"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => {
+              window.scrollTo({
+                top: window.innerHeight,
+                behavior: 'smooth'
+              });
+            }}
+          >
+            Begin the Journey <MdExpandMore size={24} />
+          </motion.button>
+          
+          <Link href="/dashboard">
+            <motion.button 
+              className="btn-secondary"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+            >
+              <MdDashboard size={20} /> Dashboard
+            </motion.button>
+          </Link>
+        </div>
       </motion.div>
 
 
