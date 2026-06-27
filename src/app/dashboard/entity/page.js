@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
-import { Search, Download, FileText, AlertCircle } from "lucide-react";
+import { MdSearch, MdFileDownload, MdDescription, MdErrorOutline } from "react-icons/md";
+import DashboardGlassPanel from "@/components/DashboardGlassPanel";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "https://fgr2-backend.mooo.com";
 
@@ -69,14 +70,14 @@ export default function EntityView() {
   return (
     <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
       <header style={{ marginBottom: "2rem" }}>
-        <h1 style={{ fontSize: "1.8rem", fontWeight: "800" }}>Entity Search</h1>
+        <h1 className="text-chromatic" style={{ fontSize: "1.8rem", fontWeight: "800", color: "var(--color-lane)" }}>Entity Search</h1>
         <p style={{ color: "var(--color-lane-dim)", marginTop: "0.5rem" }}>Search for a vehicle by license plate to view its violation history.</p>
       </header>
 
       {/* Search Bar */}
       <form onSubmit={handleSearch} style={{ display: "flex", gap: "1rem", marginBottom: "3rem" }}>
         <div style={{ position: "relative", flex: 1 }}>
-          <Search size={20} color="var(--color-lane-dim)" style={{ position: "absolute", left: "1rem", top: "50%", transform: "translateY(-50%)" }} />
+          <MdSearch size={20} color="var(--color-lane-dim)" style={{ position: "absolute", left: "1rem", top: "50%", transform: "translateY(-50%)" }} />
           <input 
             type="text" 
             placeholder="Enter License Plate (e.g. MH01AB1234)" 
@@ -103,7 +104,7 @@ export default function EntityView() {
       {/* Error */}
       {error && (
         <div style={{ padding: "1.5rem", background: "rgba(239, 68, 68, 0.1)", borderRadius: "8px", color: "var(--color-danger)", marginBottom: "2rem", display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <AlertCircle size={20} />
+          <MdErrorOutline size={20} />
           {error}
         </div>
       )}
@@ -118,7 +119,7 @@ export default function EntityView() {
 
       {/* Search Results */}
       {entity && !loading && (
-        <div className="glass-panel" style={{ padding: "2rem" }}>
+        <DashboardGlassPanel style={{ padding: "2rem" }}>
           
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "2rem", borderBottom: "1px solid rgba(255,255,255,0.1)", paddingBottom: "2rem", flexWrap: "wrap", gap: "1rem" }}>
             <div>
@@ -154,7 +155,7 @@ export default function EntityView() {
               style={{ background: "rgba(255,255,255,0.1)", color: "white", padding: "0.5rem 1rem", fontSize: "0.9rem" }}
               onClick={() => downloadAuditReport(entity.plate_number)}
             >
-              <Download size={16} /> Download Audit Report
+              <MdFileDownload size={16} /> Download Audit Report
             </button>
           </div>
 
@@ -193,7 +194,7 @@ export default function EntityView() {
                         onClick={() => downloadChallan(v.id)}
                         style={{ background: "none", border: "none", color: "var(--color-caution)", cursor: "pointer", display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.85rem" }}
                       >
-                        <FileText size={14} /> E-Challan
+                        <MdDescription size={14} /> E-Challan
                       </button>
                     </td>
                   </tr>
@@ -202,12 +203,12 @@ export default function EntityView() {
             </table>
           </div>
 
-        </div>
+        </DashboardGlassPanel>
       )}
 
       {!entity && !loading && !error && (
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "4rem", color: "var(--color-lane-dim)", textAlign: "center", background: "rgba(255,255,255,0.02)", borderRadius: "8px", border: "1px dashed rgba(255,255,255,0.1)" }}>
-          <AlertCircle size={48} style={{ marginBottom: "1rem", opacity: 0.5 }} />
+          <MdErrorOutline size={48} style={{ marginBottom: "1rem", opacity: 0.5 }} />
           <p>Enter a license plate number above to retrieve the entity&apos;s complete traffic violation history and pending challans.</p>
         </div>
       )}

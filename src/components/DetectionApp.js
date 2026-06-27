@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef } from "react";
-import { Upload, X, AlertCircle } from "lucide-react";
+import { MdCloudUpload, MdClose, MdErrorOutline } from "react-icons/md";
+import DashboardGlassPanel from "@/components/DashboardGlassPanel";
 import { motion } from "framer-motion";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "https://fgr2-backend.mooo.com";
@@ -65,7 +66,7 @@ export default function DetectionApp() {
   return (
     <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
       <header style={{ marginBottom: "2rem" }}>
-        <h1 style={{ fontSize: "1.8rem", fontWeight: "800" }}>Live AI Scan</h1>
+        <h1 className="text-chromatic" style={{ fontSize: "1.8rem", fontWeight: "800", color: "var(--color-lane)" }}>Live AI Scan</h1>
         <p style={{ color: "var(--color-lane-dim)", marginTop: "0.5rem" }}>
           Upload a traffic camera image to run the YOLOv8 detection engine. Violations are automatically saved.
         </p>
@@ -91,7 +92,7 @@ export default function DetectionApp() {
               onClick={() => fileInputRef.current.click()}
             >
               <div style={{ background: "rgba(255,255,255,0.05)", padding: "1.5rem", borderRadius: "50%" }}>
-                <Upload size={40} color="var(--color-lane)" />
+                <MdCloudUpload size={48} color="var(--color-lane-dim)" style={{ marginBottom: "1rem" }} />
               </div>
               <h3 style={{ fontSize: "1.5rem", fontWeight: "600" }}>Drag & Drop Image</h3>
               <p>or click to browse from your computer</p>
@@ -100,7 +101,7 @@ export default function DetectionApp() {
               </div>
             </div>
           ) : (
-            <div className="glass-panel" style={{ padding: "1rem" }}>
+            <DashboardGlassPanel style={{ padding: "1rem" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
                 <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.9rem", color: "var(--color-lane-dim)" }}>
                   {file.name}
@@ -109,7 +110,7 @@ export default function DetectionApp() {
                   onClick={() => { setFile(null); setPreview(null); setResult(null); }}
                   style={{ background: "transparent", border: "none", color: "var(--color-lane)", cursor: "pointer" }}
                 >
-                  <X size={20} />
+                  <MdClose size={20} />
                 </button>
               </div>
               
@@ -135,17 +136,17 @@ export default function DetectionApp() {
               
               {error && (
                 <div style={{ marginTop: "1rem", padding: "1rem", background: "rgba(239, 68, 68, 0.1)", borderRadius: "8px", display: "flex", gap: "0.5rem", color: "var(--color-danger)" }}>
-                  <AlertCircle size={20} />
+                  <MdErrorOutline size={20} />
                   <span>{error}</span>
                 </div>
               )}
-            </div>
+            </DashboardGlassPanel>
           )}
         </div>
 
         {/* Results Zone */}
         <div>
-          <div className="glass-panel" style={{ height: "100%", display: "flex", flexDirection: "column" }}>
+          <DashboardGlassPanel style={{ height: "100%", display: "flex", flexDirection: "column" }}>
             <h3 style={{ fontSize: "1.1rem", fontWeight: "600", marginBottom: "1.5rem", borderBottom: "1px solid rgba(255,255,255,0.1)", paddingBottom: "1rem" }}>
               Analysis Results
             </h3>
@@ -170,7 +171,7 @@ export default function DetectionApp() {
                 style={{ flex: 1, overflowY: "auto" }}
               >
                 {/* Data Summary */}
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "2rem" }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: "1rem", marginBottom: "2rem" }}>
                   <div style={{ background: "rgba(255,255,255,0.05)", padding: "1rem", borderRadius: "8px" }}>
                     <div style={{ fontSize: "0.8rem", color: "var(--color-lane-dim)", textTransform: "uppercase", marginBottom: "0.5rem" }}>Total Violations</div>
                     <div style={{ fontSize: "2rem", fontWeight: "bold", color: result?.report?.violation_count > 0 ? "var(--color-danger)" : "var(--color-safe)" }}>
@@ -180,7 +181,7 @@ export default function DetectionApp() {
                   <div style={{ background: "rgba(255,255,255,0.05)", padding: "1rem", borderRadius: "8px" }}>
                     <div style={{ fontSize: "0.8rem", color: "var(--color-lane-dim)", textTransform: "uppercase", marginBottom: "0.5rem" }}>Processing Time</div>
                     <div style={{ fontSize: "2rem", fontWeight: "bold", fontFamily: "var(--font-mono)" }}>
-                      {result?.report?.processing_time_ms ? `${Math.round(result.report.processing_time_ms)}ms` : "N/A"}
+                      {result?.report?.processing_time_ms ? `${(result.report.processing_time_ms / 1000).toFixed(2)}s` : "N/A"}
                     </div>
                   </div>
                 </div>
@@ -245,7 +246,7 @@ export default function DetectionApp() {
                 )}
               </motion.div>
             )}
-          </div>
+          </DashboardGlassPanel>
         </div>
       </div>
     </div>
