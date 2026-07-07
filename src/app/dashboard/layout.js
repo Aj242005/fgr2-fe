@@ -14,64 +14,53 @@ export default function DashboardLayout({ children }) {
   ];
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh" }}>
+    <div className="flex flex-col md:flex-row min-h-screen bg-black">
       {/* Sidebar */}
-      <aside style={{
-        width: "280px",
-        minWidth: "280px",
-        flexShrink: 0,
-        background: "rgba(26, 26, 26, 0.95)",
-        borderRight: "1px solid rgba(255, 255, 255, 0.1)",
-        backdropFilter: "blur(10px)",
-        padding: "2rem 1rem",
-        display: "flex",
-        flexDirection: "column",
-        position: "sticky",
-        top: 0,
-        height: "100vh",
-        zIndex: 50
-      }}>
-        <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "3rem", padding: "0 1rem" }}>
-          <MdTrackChanges size={28} color="var(--color-caution)" className="animate-heartbeat" style={{ filter: "drop-shadow(0 0 10px rgba(239, 68, 68, 0.8))" }} />
-          <h2 style={{ fontSize: "1.2rem", fontWeight: "bold" }}>Grid AI</h2>
-        </Link>
+      <aside className="w-full md:w-[280px] md:min-w-[280px] shrink-0 bg-[#1a1a1a]/95 border-b md:border-b-0 md:border-r border-white/10 backdrop-blur-md pt-5 px-4 pb-2 md:p-8 flex flex-col md:sticky md:top-0 md:h-screen z-50">
+        
+        <div className="flex items-center justify-between mb-5 md:mb-12 px-1 md:px-0">
+          <Link href="/" className="flex items-center gap-2">
+            <MdTrackChanges size={28} color="var(--color-caution)" className="animate-heartbeat" style={{ filter: "drop-shadow(0 0 10px rgba(239, 68, 68, 0.8))" }} />
+            <h2 className="text-xl font-bold tracking-tight">Grid AI</h2>
+          </Link>
+          <div className="md:hidden flex items-center gap-3">
+            <div className="text-xs font-medium text-white/50 uppercase tracking-wider">Officer</div>
+            <UserButton afterSignOutUrl="/" />
+          </div>
+        </div>
 
-        <nav style={{ flex: 1, display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        <nav className="flex md:flex-col gap-3 overflow-x-auto pb-2 md:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           {navLinks.map((link) => {
             const isActive = pathname === link.path;
             return (
               <Link 
                 key={link.path} 
                 href={link.path}
+                className={`flex items-center gap-2.5 px-5 py-2.5 rounded-full transition-all text-[0.95rem] shrink-0 border ${
+                  isActive 
+                    ? "bg-[rgba(239,68,68,0.1)] border-[rgba(239,68,68,0.2)] text-red-400 shadow-[0_0_15px_rgba(239,68,68,0.1)]" 
+                    : "border-transparent text-white/50 hover:text-white hover:bg-white/5"
+                }`}
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                  padding: "0.75rem 1rem",
-                  borderRadius: "8px",
-                  background: isActive ? "rgba(250, 204, 21, 0.1)" : "transparent",
-                  color: isActive ? "var(--color-caution)" : "var(--color-lane-dim)",
                   textShadow: isActive ? "0 0 10px rgba(239, 68, 68, 0.5)" : "none",
-                  transition: "all 0.2s ease",
-                  fontSize: "0.95rem"
                 }}
               >
                 {link.icon}
-                <span style={{ fontWeight: isActive ? "600" : "400" }}>{link.name}</span>
+                <span className={isActive ? "font-semibold tracking-wide" : "font-medium"}>{link.name}</span>
               </Link>
             );
           })}
         </nav>
 
-        {/* User Profile */}
-        <div style={{ padding: "1rem", borderTop: "1px solid rgba(255,255,255,0.1)", display: "flex", alignItems: "center", gap: "1rem" }}>
+        {/* User Profile Desktop */}
+        <div className="hidden md:flex mt-auto pt-4 border-t border-white/10 items-center gap-4">
           <UserButton afterSignOutUrl="/" />
-          <div style={{ fontSize: "0.85rem", color: "var(--color-lane-dim)" }}>Traffic Officer</div>
+          <div className="text-sm text-white/40">Traffic Officer</div>
         </div>
       </aside>
 
       {/* Main Content Area */}
-      <main style={{ flex: 1, padding: "2rem", overflowY: "auto", minWidth: 0 }}>
+      <main className="flex-1 p-4 md:p-8 overflow-y-auto min-w-0">
         {children}
       </main>
     </div>

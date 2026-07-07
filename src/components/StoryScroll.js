@@ -17,7 +17,7 @@ export default function StoryScroll() {
   };
 
   return (
-    <div style={{ padding: "8rem 0" }} className="container">
+    <div style={{ padding: "8rem 5vw" }} className="container">
       <motion.div 
         variants={containerVariants}
         initial="hidden"

@@ -17,7 +17,7 @@ const GithubIcon = ({ className }) => (
 
 const Footer = () => {
   return (
-    <footer className="w-full py-24 px-4 flex flex-col items-center justify-center bg-transparent font-sans gap-6 mt-12 border-t border-white/5">
+    <footer className="w-full py-24 px-4 flex flex-col items-center justify-center bg-black font-sans gap-6 mt-12 border-t border-white/5">
       {/* Title */}
       <h2 className="text-6xl md:text-8xl italic font-serif tracking-tight text-[#e2e1eb] hover:text-[#ffb77d] transition-colors duration-500 cursor-default m-0">
         Grid AI
