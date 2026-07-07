@@ -1,7 +1,8 @@
 "use client";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { MdExpandMore, MdDashboard } from "react-icons/md";
+import { MdDashboard } from "react-icons/md";
 import Link from "next/link";
+import GlassSurface from "@/components/GlassSurface";
 
 export default function HeroSection() {
   const { scrollY } = useScroll();
@@ -19,29 +20,25 @@ export default function HeroSection() {
           Scanning the streets for violations in real-time.
         </p>
         <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap", padding: "0 1rem" }}>
-          <motion.button 
-            className="btn-primary"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => {
-              window.scrollTo({
-                top: window.innerHeight,
-                behavior: 'smooth'
-              });
-            }}
-          >
-            Begin the Journey <MdExpandMore size={24} />
-          </motion.button>
-          
           <Link href="/dashboard">
-            <motion.button 
-              className="btn-secondary"
+            <motion.div 
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+              style={{ cursor: "pointer" }}
             >
-              <MdDashboard size={20} /> Dashboard
-            </motion.button>
+              <GlassSurface
+                width={160}
+                height={50}
+                borderRadius={25}
+                brightness={60}
+                opacity={0.8}
+                blur={15}
+                backgroundOpacity={0.05}
+                contentClassName="flex items-center justify-center gap-2 px-6 py-2.5 w-full h-full text-white/90 font-medium transition-colors hover:text-white"
+              >
+                <MdDashboard size={20} /> Dashboard
+              </GlassSurface>
+            </motion.div>
           </Link>
         </div>
       </motion.div>

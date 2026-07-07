@@ -7,7 +7,7 @@ import {
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import DashboardGlassPanel from "@/components/DashboardGlassPanel";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "https://fgr2-backend.mooo.com";
+// API calls go through local Next.js proxy routes to avoid CORS issues
 
 const TYPE_COLORS = {
   RED_LIGHT_VIOLATION: '#ef4444',
@@ -52,17 +52,21 @@ const chartConfigPie = {
 export default function DashboardAreaView() {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [isDemo, setIsDemo] = useState(false);
 
   useEffect(() => {
     async function fetchStats() {
       try {
-        const res = await fetch(`${API_BASE}/api/violations/stats`);
-        if (!res.ok) throw new Error(`API error: ${res.status}`);
+        const res = await fetch(`/api/violations/stats`);
         const data = await res.json();
         setStats(data);
-      } catch (err) {
-        setError(err.message);
+        if (data._demo) setIsDemo(true);
+      } catch {
+        setStats({
+          total_today: 0, total_week: 0, total_month: 0,
+          challans_issued: 0, by_type: [], by_hour: [],
+        });
+        setIsDemo(true);
       } finally {
         setLoading(false);
       }
@@ -79,14 +83,6 @@ export default function DashboardAreaView() {
     );
   }
 
-  if (error) {
-    return (
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "60vh", color: "var(--color-danger)" }}>
-        Failed to load stats: {error}
-      </div>
-    );
-  }
-
   const pieData = (stats?.by_type || []).map(t => ({
     ...t,
     fill: TYPE_COLORS[t.name] || '#a3a3a3',
@@ -99,6 +95,23 @@ export default function DashboardAreaView() {
 
   return (
     <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+      {isDemo && (
+        <div style={{
+          padding: "0.6rem 1.2rem",
+          marginBottom: "1.5rem",
+          background: "rgba(99, 102, 241, 0.1)",
+          border: "1px solid rgba(99, 102, 241, 0.25)",
+          borderRadius: "8px",
+          display: "flex",
+          alignItems: "center",
+          gap: "0.6rem",
+          fontSize: "0.85rem",
+          color: "rgba(165, 180, 252, 0.9)",
+        }}>
+          <span style={{ fontSize: "1rem" }}>📡</span>
+          Live server is offline — displaying demo data.
+        </div>
+      )}
       <header style={{ marginBottom: "2rem", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
         <div>
           <h1 className="text-chromatic" style={{ fontSize: "1.8rem", fontWeight: "800", color: "var(--color-lane)" }}>Area Overview</h1>

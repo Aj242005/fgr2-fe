@@ -3,7 +3,7 @@ import { useState } from "react";
 import { MdSearch, MdFileDownload, MdDescription, MdErrorOutline } from "react-icons/md";
 import DashboardGlassPanel from "@/components/DashboardGlassPanel";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "https://fgr2-backend.mooo.com";
+// API calls go through local Next.js proxy routes to avoid CORS issues
 
 export default function EntityView() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -21,15 +21,11 @@ export default function EntityView() {
     setEntity(null);
 
     try {
-      const res = await fetch(`${API_BASE}/api/entity/${encodeURIComponent(plate)}`);
-      if (!res.ok) {
-        if (res.status === 404) throw new Error("No violations found for this plate.");
-        throw new Error(`API error: ${res.status}`);
-      }
+      const res = await fetch(`/api/entity/${encodeURIComponent(plate)}`);
       const data = await res.json();
       setEntity(data);
-    } catch (err) {
-      setError(err.message);
+    } catch {
+      setError("Could not connect to the server. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -37,7 +33,7 @@ export default function EntityView() {
 
   const downloadChallan = async (violationId) => {
     try {
-      const res = await fetch(`${API_BASE}/api/violations/${violationId}/challan`);
+      const res = await fetch(`/api/violations/${violationId}/challan`);
       if (!res.ok) throw new Error("Failed to download challan");
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
@@ -53,7 +49,7 @@ export default function EntityView() {
 
   const downloadAuditReport = async (plate) => {
     try {
-      const res = await fetch(`${API_BASE}/api/entity/${encodeURIComponent(plate)}/report`);
+      const res = await fetch(`/api/entity/${encodeURIComponent(plate)}/report`);
       if (!res.ok) throw new Error("Failed to download report");
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
@@ -127,6 +123,9 @@ export default function EntityView() {
                 <h2 style={{ fontSize: "2rem", fontFamily: "var(--font-mono)", fontWeight: "bold", letterSpacing: "2px" }}>
                   {entity.plate_number}
                 </h2>
+                {entity._demo && (
+                  <span style={{ fontSize: "0.7rem", padding: "0.2rem 0.6rem", borderRadius: "4px", background: "rgba(99, 102, 241, 0.15)", color: "rgba(165, 180, 252, 0.9)", border: "1px solid rgba(99, 102, 241, 0.25)" }}>DEMO</span>
+                )}
                 {entity.total_violations >= 3 && (
                   <span className="badge badge-warning">Repeat Offender</span>
                 )}

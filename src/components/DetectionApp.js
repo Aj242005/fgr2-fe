@@ -4,7 +4,7 @@ import { MdCloudUpload, MdClose, MdErrorOutline } from "react-icons/md";
 import DashboardGlassPanel from "@/components/DashboardGlassPanel";
 import { motion } from "framer-motion";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "https://fgr2-backend.mooo.com";
+// API calls go through local Next.js proxy routes to avoid CORS issues
 
 export default function DetectionApp() {
   const [file, setFile] = useState(null);
@@ -45,7 +45,7 @@ export default function DetectionApp() {
     formData.append("file", file);
 
     try {
-      const response = await fetch(`${API_BASE}/api/analyze/image`, {
+      const response = await fetch(`/api/analyze/image`, {
         method: "POST",
         body: formData,
       });
@@ -190,32 +190,34 @@ export default function DetectionApp() {
                 {result?.report?.violations && result.report.violations.length > 0 && (
                   <div>
                     <h4 style={{ marginBottom: "1rem", color: "var(--color-caution)" }}>Detected Violations</h4>
-                    <table className="data-table">
-                      <thead>
-                        <tr>
-                          <th>Type</th>
-                          <th>Confidence</th>
-                          <th>Severity</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {result.report.violations.map((v, i) => (
-                          <tr key={i}>
-                            <td>
-                              <span className={`badge ${v.type === "helmet" || v.type === "no_helmet" ? "badge-danger" : "badge-warning"}`}>
-                                {v.type}
-                              </span>
-                            </td>
-                            <td style={{ fontFamily: "var(--font-mono)" }}>{(v.confidence * 100).toFixed(1)}%</td>
-                            <td>
-                              <span style={{ color: v.severity === "HIGH" ? "var(--color-danger)" : v.severity === "MEDIUM" ? "var(--color-caution)" : "var(--color-lane-dim)", fontWeight: "600", fontSize: "0.85rem" }}>
-                                {v.severity}
-                              </span>
-                            </td>
+                    <div style={{ overflowX: "auto" }}>
+                      <table className="data-table">
+                        <thead>
+                          <tr>
+                            <th>Type</th>
+                            <th>Confidence</th>
+                            <th>Severity</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody>
+                          {result.report.violations.map((v, i) => (
+                            <tr key={i}>
+                              <td>
+                                <span className={`badge ${v.type === "helmet" || v.type === "no_helmet" ? "badge-danger" : "badge-warning"}`}>
+                                  {v.type}
+                                </span>
+                              </td>
+                              <td style={{ fontFamily: "var(--font-mono)" }}>{(v.confidence * 100).toFixed(1)}%</td>
+                              <td>
+                                <span style={{ color: v.severity === "HIGH" ? "var(--color-danger)" : v.severity === "MEDIUM" ? "var(--color-caution)" : "var(--color-lane-dim)", fontWeight: "600", fontSize: "0.85rem" }}>
+                                  {v.severity}
+                                </span>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                     <p style={{ marginTop: "1rem", fontSize: "0.8rem", color: "var(--color-safe)" }}>
                       ✓ Violations have been automatically saved to the database.
                     </p>
@@ -226,22 +228,24 @@ export default function DetectionApp() {
                 {result?.report?.plates && result.report.plates.length > 0 && (
                   <div style={{ marginTop: "2rem" }}>
                     <h4 style={{ marginBottom: "1rem", color: "var(--color-safe)" }}>License Plates</h4>
-                    <table className="data-table">
-                      <thead>
-                        <tr>
-                          <th>Plate Text</th>
-                          <th>OCR Conf.</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {result.report.plates.map((p, i) => (
-                          <tr key={i}>
-                            <td style={{ fontFamily: "var(--font-mono)", fontWeight: "bold", letterSpacing: "1px" }}>{p.plate_text}</td>
-                            <td style={{ fontFamily: "var(--font-mono)" }}>{(p.ocr_confidence * 100).toFixed(1)}%</td>
+                    <div style={{ overflowX: "auto" }}>
+                      <table className="data-table">
+                        <thead>
+                          <tr>
+                            <th>Plate Text</th>
+                            <th>OCR Conf.</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody>
+                          {result.report.plates.map((p, i) => (
+                            <tr key={i}>
+                              <td style={{ fontFamily: "var(--font-mono)", fontWeight: "bold", letterSpacing: "1px" }}>{p.plate_text}</td>
+                              <td style={{ fontFamily: "var(--font-mono)" }}>{(p.ocr_confidence * 100).toFixed(1)}%</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 )}
               </motion.div>
